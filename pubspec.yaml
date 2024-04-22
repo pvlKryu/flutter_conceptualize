@@ -1,5 +1,5 @@
 name: conceptualize
-description: A new Flutter project.
+description: PET project for clean architecture pattern
 publish_to: 'none'
 version: 0.1.0
 
@@ -16,9 +16,6 @@ dependencies:
   flutter_bloc: ^8.1.3
   bloc: ^8.1.2
   get_it: ^7.6.6
-  equatable: ^2.0.5
-  connectivity: ^3.0.6
-  path_provider: ^2.1.2
   retrofit: ^4.1.0
 
 dev_dependencies:
@@ -28,7 +25,6 @@ dev_dependencies:
   retrofit_generator: ^8.0.6
   json_serializable: 
   flutter_lints: ^2.0.0
-  
 
 flutter:
   uses-material-design: true
