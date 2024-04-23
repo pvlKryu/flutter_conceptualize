@@ -17,6 +17,7 @@ dependencies:
   bloc: ^8.1.2
   get_it: ^7.6.6
   retrofit: ^4.1.0
+  equatable: ^2.0.5
 
 dev_dependencies:
   flutter_test:
