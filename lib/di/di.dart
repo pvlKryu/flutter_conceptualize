@@ -1,4 +1,5 @@
 import 'package:conceptualize/data/data_sources/remote_data_source.dart';
+import 'package:conceptualize/data/network/custom_interceptors.dart';
 import 'package:conceptualize/data/network/datamuse_api.dart';
 import 'package:conceptualize/data/network/dictionary_api.dart';
 import 'package:conceptualize/data/repository/repository_impl.dart';
@@ -17,6 +18,8 @@ class BaseDi {
   final dio = Dio();
 
   void setUp() {
+    dio.interceptors.add(CustomInterceptors());
+
     getIt.registerLazySingleton<DatamuseApi>(() => DatamuseApi(dio));
     getIt.registerLazySingleton<DictionaryApi>(() => DictionaryApi(dio));
 
