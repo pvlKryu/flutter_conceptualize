@@ -1,6 +1,8 @@
-import 'package:conceptualize/presentation/home_screen/bloc/bloc/main_screen_bloc.dart';
-import 'package:conceptualize/presentation/home_screen/bloc/bloc/main_screen_event.dart';
-import 'package:conceptualize/presentation/home_screen/bloc/bloc/main_screen_state.dart';
+import 'package:conceptualize/di/di.dart';
+import 'package:conceptualize/domain/entities/concept_entity.dart';
+import 'package:conceptualize/presentation/pages/main_screen/bloc/main_screen_bloc.dart';
+import 'package:conceptualize/presentation/pages/main_screen/bloc/main_screen_event.dart';
+import 'package:conceptualize/presentation/pages/main_screen/bloc/main_screen_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -23,6 +25,15 @@ class _MainScreenState extends State<MainScreen> {
   void _onSearch() {
     FocusScope.of(context).unfocus();
     context.read<MainScreenBloc>().add(GetConcepts(sentence: _textEditingController.text));
+  }
+
+  void _showDefinitionModal(BuildContext context, String word) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return DefinitionModalPage(word: word);
+      },
+    );
   }
 
   @override
@@ -69,6 +80,8 @@ class _MainScreenState extends State<MainScreen> {
           Expanded(
             child: BlocBuilder<MainScreenBloc, MainScreenState>(
               builder: (context, state) {
+                List<ConceptEntity> listConcepts = state.conceptEntitiesList ?? [];
+
                 if (state.isLoading) {
                   return const Center(child: CircularProgressIndicator());
                 }
@@ -77,23 +90,39 @@ class _MainScreenState extends State<MainScreen> {
                     title: Text('Make any search for getting suggested terms'),
                   );
                 }
-                return ListView.builder(
-                  itemCount: state.conceptEntitiesList?.length ?? 0,
-                  itemBuilder: (context, index) {
-                    final entity = state.conceptEntitiesList?[index];
-                    return ListTile(
-                      onTap: () => print(''),
-                      title: Row(
-                        children: [
-                          Text(
-                            '${index + 1}. ',
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          Text('${entity?.word ?? ''} '),
-                        ],
+                return Column(
+                  children: [
+                    ListTile(
+                      title: Text(
+                        listConcepts.isNotEmpty
+                            ? 'Relevant terms: '
+                            : 'No matching terms found. Please change your search query',
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
-                    );
-                  },
+                    ),
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: state.conceptEntitiesList?.length ?? 0,
+                        itemBuilder: (context, index) {
+                          final entity = state.conceptEntitiesList?[index];
+                          return ListTile(
+                            onTap: () {
+                              _showDefinitionModal(context, entity?.word ?? '');
+                            },
+                            title: Row(
+                              children: [
+                                Text(
+                                  '${index + 1}. ',
+                                  style: const TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                Text('${entity?.word ?? ''} '),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
                 );
               },
             ),

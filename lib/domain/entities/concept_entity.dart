@@ -3,5 +3,5 @@ final class ConceptEntity {
   final int? score;
   final List<String>? tags;
 
-  const ConceptEntity({this.word, this.score, this.tags});
+  const ConceptEntity({this.word, this.score, this.tags,});
 }

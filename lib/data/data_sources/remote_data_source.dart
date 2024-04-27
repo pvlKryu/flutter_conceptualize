@@ -9,7 +9,7 @@ abstract interface class RemoteDataSource {
   Future<List<ConceptDto>> fetchConcepts(String sentence);
 
   /// Get definition by word
-  Future<DefinitionDto> fetchDefinition(String word);
+  Future<List<DefinitionDto>> fetchDefinition(String word);
 }
 
 final class RemoteDataSourceImpl implements RemoteDataSource {
@@ -28,7 +28,7 @@ final class RemoteDataSourceImpl implements RemoteDataSource {
   }
 
   @override
-  Future<DefinitionDto> fetchDefinition(String word) async {
+  Future<List<DefinitionDto>> fetchDefinition(String word) async {
     return checkNetErrors(() => _dictionaryApi.getDefinitionByWord(word));
   }
 }

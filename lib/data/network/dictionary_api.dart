@@ -9,5 +9,5 @@ abstract interface class DictionaryApi {
   factory DictionaryApi(Dio dio, {String baseUrl}) = _DictionaryApi;
 
   @GET("api/v2/entries/en/{word}")
-  Future<DefinitionDto> getDefinitionByWord(@Path('word') String word);
+  Future<List<DefinitionDto>> getDefinitionByWord(@Path('word') String word);
 }
