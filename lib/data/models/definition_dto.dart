@@ -4,89 +4,101 @@ import 'package:json_annotation/json_annotation.dart';
 part 'definition_dto.g.dart';
 
 @JsonSerializable(explicitToJson: true, createToJson: false)
-final class DefinitionDto {
-  final String word;
-  final String phonetic;
-  final List<Phonetic> phonetics;
-  final String origin;
-  final List<Meaning> meanings;
+class DefinitionDto {
+  final String? word;
+  final String? phonetic;
+  final List<Phonetic>? phonetics;
+  final List<Meaning>? meanings;
+  final License? license;
+  final List<String>? sourceUrls;
 
   const DefinitionDto({
-    required this.word,
-    required this.phonetic,
-    required this.phonetics,
-    required this.origin,
-    required this.meanings,
+    this.word,
+    this.phonetic,
+    this.phonetics,
+    this.meanings,
+    this.license,
+    this.sourceUrls,
   });
 
   factory DefinitionDto.fromJson(Map<String, dynamic> json) => _$DefinitionDtoFromJson(json);
 
   DefinitionEntity toEntity() {
-    var phoneticEntities = phonetics.map((e) => PhoneticEntity(text: e.text, audio: e.audio)).toList();
+    List<String> meanings = [];
+    List<String> synonyms = [];
+    List<String> antonyms = [];
 
-    var meaningEntities = meanings
-        .map((m) => MeaningEntity(
-              partOfSpeech: m.partOfSpeech,
-              definitions: m.definitions
-                  .map((d) => DefinitionDetailEntity(
-                        definition: d.definition,
-                        example: d.example,
-                        synonyms: d.synonyms.toList(),
-                        antonyms: d.antonyms.toList(),
-                      ))
-                  .toList(),
-            ))
-        .toList();
-
-    return DefinitionEntity(
-      word: word,
-      phonetic: phonetic,
-      phonetics: phoneticEntities,
-      origin: origin,
-      meanings: meaningEntities,
-    );
+    for (var meaning in this.meanings ?? []) {
+      for (var def in meaning.definitions ?? []) {
+        meanings.add(def.definition ?? '');
+        synonyms.addAll(def.synonyms ?? []);
+        antonyms.addAll(def.antonyms ?? []);
+      }
+    }
+    return DefinitionEntity(word: word, meanings: meanings, synonyms: synonyms, antonyms: antonyms);
   }
 }
 
 @JsonSerializable(explicitToJson: true)
-final class Phonetic {
-  final String text;
+class Phonetic {
+  final String? text;
   final String? audio;
+  final String? sourceUrl;
+  final License? license;
 
-  const Phonetic({required this.text, this.audio});
+  Phonetic({
+    this.text,
+    this.audio,
+    this.sourceUrl,
+    this.license,
+  });
 
   factory Phonetic.fromJson(Map<String, dynamic> json) => _$PhoneticFromJson(json);
-
   Map<String, dynamic> toJson() => _$PhoneticToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
-final class Meaning {
-  final String partOfSpeech;
-  final List<DefinitionDetail> definitions;
+class Meaning {
+  final String? partOfSpeech;
+  final List<DefinitionDetail>? definitions;
 
-  const Meaning({required this.partOfSpeech, required this.definitions});
+  Meaning({
+    this.partOfSpeech,
+    this.definitions,
+  });
 
   factory Meaning.fromJson(Map<String, dynamic> json) => _$MeaningFromJson(json);
-
   Map<String, dynamic> toJson() => _$MeaningToJson(this);
 }
 
-@JsonSerializable()
-final class DefinitionDetail {
-  final String definition;
+@JsonSerializable(explicitToJson: true)
+class DefinitionDetail {
+  final String? definition;
+  final List<String>? synonyms;
+  final List<String>? antonyms;
   final String? example;
-  final List<String> synonyms;
-  final List<String> antonyms;
 
-  const DefinitionDetail({
-    required this.definition,
+  DefinitionDetail({
+    this.definition,
+    this.synonyms,
+    this.antonyms,
     this.example,
-    required this.synonyms,
-    required this.antonyms,
   });
 
   factory DefinitionDetail.fromJson(Map<String, dynamic> json) => _$DefinitionDetailFromJson(json);
-
   Map<String, dynamic> toJson() => _$DefinitionDetailToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class License {
+  final String? name;
+  final String? url;
+
+  License({
+    this.name,
+    this.url,
+  });
+
+  factory License.fromJson(Map<String, dynamic> json) => _$LicenseFromJson(json);
+  Map<String, dynamic> toJson() => _$LicenseToJson(this);
 }

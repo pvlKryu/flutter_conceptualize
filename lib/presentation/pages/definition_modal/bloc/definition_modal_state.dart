@@ -2,28 +2,23 @@ import 'package:conceptualize/domain/entities/concept_entity.dart';
 import 'package:conceptualize/domain/entities/definition_entity.dart';
 import 'package:equatable/equatable.dart';
 
-class MainScreenState extends Equatable {
-  final List<ConceptEntity>? conceptEntitiesList;
+class DefinitionModalState extends Equatable {
   final DefinitionEntity? definitionEntity;
   final bool isLoading;
   final bool isError;
-  final String? word;
-  final String? sentence;
-
-  const MainScreenState._({
-    this.conceptEntitiesList,
+ 
+  const DefinitionModalState._({
     this.definitionEntity,
-    this.word,
-    this.sentence,
+
     this.isLoading = false,
     this.isError = false,
   });
 
-  factory MainScreenState.initial() {
-    return const MainScreenState._();
+  factory DefinitionModalState.initial() {
+    return const DefinitionModalState._();
   }
 
-  MainScreenState copyWith({
+  DefinitionModalState copyWith({
     List<ConceptEntity>? conceptEntitiesList,
     DefinitionEntity? definitionEntity,
     String? word,
@@ -31,23 +26,17 @@ class MainScreenState extends Equatable {
     bool? isLoading,
     bool? isError,
   }) {
-    return MainScreenState._(
-      conceptEntitiesList: conceptEntitiesList ?? this.conceptEntitiesList,
+    return DefinitionModalState._(
       isLoading: isLoading ?? this.isLoading,
       isError: isError ?? this.isError,
-      word: word ?? this.word,
-      sentence: sentence ?? this.sentence,
       definitionEntity: definitionEntity ?? this.definitionEntity,
     );
   }
 
   @override
   List<Object?> get props => [
-        conceptEntitiesList,
         definitionEntity,
         isLoading,
         isError,
-        word,
-        sentence,
       ];
 }

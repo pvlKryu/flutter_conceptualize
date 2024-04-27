@@ -23,7 +23,7 @@ class RepositoryImpl implements Repository {
   Future<DefinitionEntity> getDefinitionByWord(String word) async {
     try {
       final dto = await _remoteDataSource.fetchDefinition(word);
-      return dto.toEntity();
+      return dto[0].toEntity();
     } catch (e) {
       // Handle exceptions from data source or during mapping
       throw Exception('Failed to load definition: $e');

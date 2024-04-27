@@ -5,9 +5,3 @@ final class GetConcepts extends MainScreenEvent {
 
   GetConcepts({required this.sentence});
 }
-
-final class GetDefinition extends MainScreenEvent {
-  final String word;
-
-  GetDefinition({required this.word});
-}

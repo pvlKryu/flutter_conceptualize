@@ -6,8 +6,10 @@ import 'package:conceptualize/data/repository/repository_impl.dart';
 import 'package:conceptualize/domain/repository/repository.dart';
 import 'package:conceptualize/domain/use_cases/get_concepts_use_case.dart';
 import 'package:conceptualize/domain/use_cases/get_definition_use_case.dart';
-import 'package:conceptualize/presentation/home_screen/bloc/bloc/main_screen_bloc.dart';
-import 'package:conceptualize/presentation/home_screen/main_screen.dart';
+import 'package:conceptualize/presentation/pages/definition_modal/bloc/definition_modal_bloc.dart';
+import 'package:conceptualize/presentation/pages/definition_modal/definition_modal.dart';
+import 'package:conceptualize/presentation/pages/main_screen/bloc/main_screen_bloc.dart';
+import 'package:conceptualize/presentation/pages/main_screen/main_screen.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -42,9 +44,27 @@ class MainPage extends StatelessWidget {
     return BlocProvider<MainScreenBloc>(
       create: (_) => MainScreenBloc(
         getConceptsUseCase: getIt(),
-        getDefinitionUseCase: getIt(),
       ),
       child: const MainScreen(),
+    );
+  }
+}
+
+class DefinitionModalPage extends StatelessWidget {
+  const DefinitionModalPage({super.key, required this.word});
+
+  final String word;
+
+  GetIt get getIt => GetIt.I;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider<DefinitionModalBloc>(
+      create: (_) => DefinitionModalBloc(
+        getDefinitionUseCase: getIt(),
+        word: word,
+      ),
+      child: const DefinitionModalView(),
     );
   }
 }
