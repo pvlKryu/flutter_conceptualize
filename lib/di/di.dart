@@ -6,6 +6,8 @@ import 'package:conceptualize/data/repository/repository_impl.dart';
 import 'package:conceptualize/domain/repository/repository.dart';
 import 'package:conceptualize/domain/use_cases/get_concepts_use_case.dart';
 import 'package:conceptualize/domain/use_cases/get_definition_use_case.dart';
+import 'package:conceptualize/domain/use_cases/get_search_list_use_case.dart';
+import 'package:conceptualize/domain/use_cases/save_search_use_case.dart';
 import 'package:conceptualize/presentation/pages/definition_modal/bloc/definition_modal_bloc.dart';
 import 'package:conceptualize/presentation/pages/definition_modal/definition_modal.dart';
 import 'package:conceptualize/presentation/pages/main_screen/bloc/main_screen_bloc.dart';
@@ -31,6 +33,8 @@ class BaseDi {
     getIt.registerLazySingleton<Repository>(() => RepositoryImpl(remoteDataSource: getIt.get()));
     getIt.registerFactory<GetConceptsUseCase>(() => GetConceptsUseCase(repository: getIt.get()));
     getIt.registerFactory<GetDefinitionUseCase>(() => GetDefinitionUseCase(repository: getIt.get()));
+    getIt.registerFactory<GetSearchListUseCase>(() => GetSearchListUseCase(repository: getIt.get()));
+    getIt.registerFactory<SaveSearchUseCase>(() => SaveSearchUseCase(repository: getIt.get()));
   }
 }
 
@@ -44,6 +48,8 @@ class MainPage extends StatelessWidget {
     return BlocProvider<MainScreenBloc>(
       create: (_) => MainScreenBloc(
         getConceptsUseCase: getIt(),
+        saveSearchUseCase: getIt(),
+        getSearchListUseCase: getIt(),
       ),
       child: const MainScreen(),
     );

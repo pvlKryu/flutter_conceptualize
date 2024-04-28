@@ -5,6 +5,7 @@ import 'package:conceptualize/domain/repository/repository.dart';
 
 class RepositoryImpl implements Repository {
   final RemoteDataSource _remoteDataSource;
+  Set<String> _searchList = {};
 
   RepositoryImpl({required RemoteDataSource remoteDataSource}) : _remoteDataSource = remoteDataSource;
 
@@ -28,5 +29,15 @@ class RepositoryImpl implements Repository {
       // Handle exceptions from data source or during mapping
       throw Exception('Failed to load definition: $e');
     }
+  }
+
+  @override
+  Future<List<String>> getSearchList() async {
+    return _searchList.toList();
+  }
+
+  @override
+  void saveSearch(String sentence) {
+    _searchList.add(sentence);
   }
 }
