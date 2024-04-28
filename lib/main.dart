@@ -3,7 +3,7 @@ import 'package:conceptualize/di/di.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  BaseDi baseDi = BaseDi();
+  final baseDi = BaseDi();
   baseDi.setUp();
   runApp(const MyApp());
 }

@@ -40,7 +40,9 @@ class _MainScreenState extends State<MainScreen> {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
-        return SearchModal(searchHistory: searchHistory);
+        return SearchModal(
+          searchHistory: searchHistory,
+        );
       },
     );
   }

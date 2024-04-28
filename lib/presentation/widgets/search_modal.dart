@@ -21,14 +21,19 @@ class SearchModal extends StatelessWidget {
             itemCount: searchHistory.length,
             itemBuilder: (context, index) {
               final item = searchHistory[index];
-              return Card(
-                color: Colors.blue.shade50,
-                child: ListTile(
-                  title: Text(
-                    item,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+              return GestureDetector(
+                // onTap: () {
+                //   Navigator.pop(context);
+                // },
+                child: Card(
+                  color: Colors.blue.shade50,
+                  child: ListTile(
+                    title: Text(
+                      item,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    // trailing: const Icon(Icons.replay_sharp),
                   ),
-                  trailing: const Icon(Icons.search_rounded),
                 ),
               );
             },
