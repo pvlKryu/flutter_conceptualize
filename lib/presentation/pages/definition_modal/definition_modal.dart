@@ -12,14 +12,27 @@ class DefinitionModalView extends StatelessWidget {
     return BlocBuilder<DefinitionModalBloc, DefinitionModalState>(
       builder: (context, state) {
         final DefinitionEntity? definitionEntity = state.definitionEntity;
+        final synonyms = definitionEntity?.synonyms ?? [];
+        final antonyms = definitionEntity?.antonyms ?? [];
+
         if (state.isLoading) {
           return const Center(child: CircularProgressIndicator());
         } else if (state.isError) {
-          return const Center(child: Text('Sorry, something went bad or we could not find your definition'));
+          return const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Center(
+              child: Text(
+                'Sorry, something went bad or we could not find your definition. \n \n Please try to choose another word.',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+            ),
+          );
         } else {
-          return SingleChildScrollView(
-            child: Container(
-              padding: const EdgeInsets.all(20),
+          return Container(
+            padding: const EdgeInsets.all(20),
+            color: Colors.blue.shade50,
+            child: SingleChildScrollView(
               child: Wrap(
                 children: [
                   Text(definitionEntity?.word ?? "No word provided",
@@ -27,12 +40,16 @@ class DefinitionModalView extends StatelessWidget {
                   const Divider(),
                   _buildSectionTitle("Meanings:"),
                   _buildList(definitionEntity?.meanings),
-                  const Divider(),
-                  _buildSectionTitle("Synonyms:"),
-                  _buildList(definitionEntity?.synonyms),
-                  const Divider(),
-                  _buildSectionTitle("Antonyms:"),
-                  _buildList(definitionEntity?.antonyms),
+                  if (synonyms.isNotEmpty) ...[
+                    const Divider(),
+                    _buildSectionTitle("Synonyms:"),
+                    _buildList(synonyms),
+                  ],
+                  if (antonyms.isNotEmpty) ...[
+                    const Divider(),
+                    _buildSectionTitle("Antonyms:"),
+                    _buildList(antonyms),
+                  ],
                 ],
               ),
             ),
@@ -52,13 +69,31 @@ class DefinitionModalView extends StatelessWidget {
   Widget _buildList(List<String>? items) {
     return items == null || items.isEmpty
         ? const Text("Not found")
-        : Column(
-            children: items
-                .map((item) => Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 2),
-                      child: Text(item, style: const TextStyle(fontSize: 16)),
-                    ))
-                .toList(),
+        : Align(
+            alignment: Alignment.centerLeft,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: items
+                  .map((item) => Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 2),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "• ",
+                              style: TextStyle(fontSize: 16, height: 1.5),
+                            ),
+                            Expanded(
+                              child: Text(
+                                item,
+                                style: const TextStyle(fontSize: 16),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ))
+                  .toList(),
+            ),
           );
   }
 }

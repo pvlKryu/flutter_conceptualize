@@ -5,4 +5,8 @@ abstract interface class Repository {
   Future<List<ConceptEntity>> getConceptsBySentences(String sentence);
 
   Future<DefinitionEntity> getDefinitionByWord(String word);
+
+  void saveSearch(String sentence);
+
+  Future<List<String>> getSearchList();
 }

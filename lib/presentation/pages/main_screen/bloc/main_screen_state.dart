@@ -8,6 +8,7 @@ class MainScreenState extends Equatable {
   final bool isError;
   final String? word;
   final String? sentence;
+  final List<String> searchList;
 
   const MainScreenState._({
     this.conceptEntitiesList,
@@ -15,6 +16,7 @@ class MainScreenState extends Equatable {
     this.sentence,
     this.isLoading = false,
     this.isError = false,
+    this.searchList = const [],
   });
 
   factory MainScreenState.initial() {
@@ -28,6 +30,7 @@ class MainScreenState extends Equatable {
     String? sentence,
     bool? isLoading,
     bool? isError,
+    List<String>? searchList,
   }) {
     return MainScreenState._(
       conceptEntitiesList: conceptEntitiesList ?? this.conceptEntitiesList,
@@ -35,6 +38,7 @@ class MainScreenState extends Equatable {
       isError: isError ?? this.isError,
       word: word ?? this.word,
       sentence: sentence ?? this.sentence,
+      searchList: searchList ?? this.searchList,
     );
   }
 
@@ -45,5 +49,6 @@ class MainScreenState extends Equatable {
         isError,
         word,
         sentence,
+        searchList,
       ];
 }
