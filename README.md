@@ -27,3 +27,7 @@ conceptualize isn't just an app; it's a movement towards better, more informed w
 
 Download conceptualize today and start transforming your ideas into impactful words and projects.
 
+Thanks to free API services:
+- https://www.datamuse.com/api/
+- https://dictionaryapi.dev/
+
