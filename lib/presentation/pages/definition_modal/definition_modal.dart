@@ -2,6 +2,7 @@ import 'package:conceptualize/domain/entities/definition_entity.dart';
 import 'package:conceptualize/presentation/pages/definition_modal/bloc/definition_modal_bloc.dart';
 import 'package:conceptualize/presentation/pages/definition_modal/bloc/definition_modal_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DefinitionModalView extends StatelessWidget {
@@ -35,8 +36,22 @@ class DefinitionModalView extends StatelessWidget {
             child: SingleChildScrollView(
               child: Wrap(
                 children: [
-                  Text(definitionEntity?.word ?? "No word provided",
-                      style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+                  Row(
+                    children: [
+                      Text(definitionEntity?.word ?? "No word provided",
+                          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+                      IconButton(
+                          icon: const Icon(Icons.copy),
+                          onPressed: () =>
+                              Clipboard.setData(ClipboardData(text: definitionEntity?.word ?? '')).then((value) {
+                                final snackBar = SnackBar(
+                                  content: Text('Meanings of ${definitionEntity?.word} Copied to Clipboard'),
+                                );
+                                Navigator.pop(context);
+                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                              })),
+                    ],
+                  ),
                   const Divider(),
                   _buildSectionTitle("Meanings:"),
                   _buildList(definitionEntity?.meanings),
