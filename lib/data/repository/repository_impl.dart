@@ -5,6 +5,7 @@ import 'package:conceptualize/domain/repository/repository.dart';
 
 class RepositoryImpl implements Repository {
   final RemoteDataSource _remoteDataSource;
+  // ignore: prefer_final_fields
   Set<String> _searchList = {};
 
   RepositoryImpl({required RemoteDataSource remoteDataSource}) : _remoteDataSource = remoteDataSource;
