@@ -3,6 +3,11 @@ description: PET project for clean architecture pattern
 publish_to: 'none'
 version: 0.1.0
 
+platforms:
+  android:
+  ios:
+  web:
+
 environment:
   sdk: '>=3.1.0 <4.0.0'
 
