@@ -1,5 +1,8 @@
 # conceptualize
 
+Try here (web version): 
+https://pvlkryu.github.io/flutter_conceptualize_web_demo/
+
 Unlock the Full Potential of Your Ideas with conceptualize
 
 conceptualize is the ultimate companion for students, educators, researchers, and writers across all disciplines. Whether you're crafting a scientific paper, diving into academic research, or exploring creative writing, conceptualize brings a world of knowledge and insight right to your fingertips.
@@ -30,4 +33,3 @@ Download conceptualize today and start transforming your ideas into impactful wo
 Thanks to free API services:
 - https://www.datamuse.com/api/
 - https://dictionaryapi.dev/
-
